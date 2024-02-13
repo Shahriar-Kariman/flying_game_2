@@ -1,3 +1,58 @@
-[gd_scene format=3 uid="uid://ctdvjmapx5ci6"]
+[gd_scene load_steps=12 format=3 uid="uid://ctdvjmapx5ci6"]
+
+[ext_resource type="PackedScene" uid="uid://dx10e2ju3r2n8" path="res://jet.tscn" id="1_l25b7"]
+[ext_resource type="Texture2D" uid="uid://cpj3jme02kw7v" path="res://skybox.png" id="2_7lk6a"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_21jvi"]
+panorama = ExtResource("2_7lk6a")
+
+[sub_resource type="Sky" id="Sky_py44k"]
+sky_material = SubResource("PanoramaSkyMaterial_21jvi")
+
+[sub_resource type="Environment" id="Environment_u04bc"]
+background_mode = 2
+sky = SubResource("Sky_py44k")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ral85"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2b575"]
+
+[sub_resource type="Gradient" id="Gradient_vrai2"]
+offsets = PackedFloat32Array(0, 0.0819672, 0.163934, 0.303279, 0.434426, 0.52459, 0.663934, 0.819672, 1)
+colors = PackedColorArray(0.505344, 0.505344, 0.505344, 1, 0.103799, 0.0892236, 0.0664666, 1, 0.207598, 0.178447, 0.132933, 1, 0.423378, 0.423378, 0.423378, 1, 0.138124, 0.10267, 0.0473155, 1, 0.240943, 0.232993, 0.220571, 1, 0.885246, 0.885246, 0.885246, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_akmdu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x0g52"]
+color_ramp = SubResource("Gradient_vrai2")
+noise = SubResource("FastNoiseLite_akmdu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7x80p"]
+transparency = 1
+albedo_color = Color(0, 0.239216, 0.4, 1)
+metallic = 0.33
+roughness = 0.75
+emission_enabled = true
+emission = Color(0.117647, 0.117647, 0.117647, 1)
+emission_texture = SubResource("NoiseTexture2D_x0g52")
 
 [node name="main" type="Node3D"]
+
+[node name="Jet" parent="." instance=ExtResource("1_l25b7")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 15, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Jet"]
+transform = Transform3D(-1, 1.51808e-08, -8.60946e-08, 0, 0.984808, 0.173648, 8.74228e-08, 0.173648, -0.984808, 0, 1.8, -12.329)
+environment = SubResource("Environment_u04bc")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, 0, 0, 0)
+shape = SubResource("BoxShape3D_ral85")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, 0, -0.05, 0)
+mesh = SubResource("BoxMesh_2b575")
+surface_material_override/0 = SubResource("StandardMaterial3D_7x80p")
