@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://bebuf40vra72d"]
+
+[ext_resource type="Script" path="res://obsticle.gd" id="1_2rmee"]
+[ext_resource type="Material" uid="uid://7vwxr76e1gcd" path="res://obsticleMaterial.tres" id="1_gyv17"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_hvlpk"]
+material = ExtResource("1_gyv17")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mh2om"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_afcm2"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xlmtq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rgmyx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b1fy5"]
+
+[node name="Obsticle" type="Node3D"]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+script = ExtResource("1_2rmee")
+
+[node name="box" type="StaticBody3D" parent="." groups=["frame"]]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="box"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.51696, -0.00435138, 0)
+mesh = SubResource("BoxMesh_hvlpk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="box"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.51696, -0.00435138, 0)
+shape = SubResource("BoxShape3D_mh2om")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="box"]
+transform = Transform3D(2, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0113726, 0.985486, 0)
+mesh = SubResource("BoxMesh_hvlpk")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="box"]
+transform = Transform3D(2, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0113726, 0.985486, 0)
+shape = SubResource("BoxShape3D_afcm2")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="box"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.50711, -3.56436e-05, 0)
+mesh = SubResource("BoxMesh_hvlpk")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="box"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.50711, -3.56436e-05, 0)
+shape = SubResource("BoxShape3D_xlmtq")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="box"]
+transform = Transform3D(2, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.00541806, -1.00115, 0)
+mesh = SubResource("BoxMesh_hvlpk")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="box"]
+transform = Transform3D(2, 3.55271e-15, 0, 0, -4.37114e-08, -1, -7.10543e-15, 1, -4.37114e-08, 0.00541806, -1.00115, 0)
+shape = SubResource("BoxShape3D_rgmyx")
+
+[node name="center" type="Area3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+collision_layer = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="center"]
+transform = Transform3D(2, 0, 0, 0, -2.18557e-09, -1, 0, 0.05, -4.37114e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_b1fy5")

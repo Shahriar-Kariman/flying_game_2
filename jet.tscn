@@ -20,8 +20,10 @@ size = Vector3(1.36487, 0.336914, 1.45239)
 [sub_resource type="BoxShape3D" id="BoxShape3D_kgfiv"]
 size = Vector3(0.10144, 0.915039, 0.740723)
 
-[node name="Jet" type="CharacterBody3D" groups=["Jet"]]
+[node name="Jet" type="CharacterBody3D"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+disable_mode = 2
+collision_mask = 6
 script = ExtResource("1_hu052")
 
 [node name="pivot" type="Node3D" parent="."]

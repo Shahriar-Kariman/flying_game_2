@@ -6,6 +6,10 @@ var circleAngle : float #radians
 var selfRotationSpeed : float
 var lastDirection : Vector3
 
+var forward = 0
+var roll = 0
+var count = 2
+
 func _ready():
 	circleRadius = 10
 	circleSpeed = .5
@@ -16,21 +20,59 @@ func _ready():
 	lastDirection.normalized()
 
 func _physics_process(delta):
-	circleAngle += circleSpeed * delta
 	
-	circleAngle = fmod(circleAngle , 2*PI)
 	
-	var newPositionX = circleRadius * cos(circleAngle)
-	var newPositionZ = circleRadius * sin(circleAngle)
+	if Input.is_action_pressed("forward"):
+		forward = 1
+	else:
+		if count:
+			forward = 1
+			count -= 1
+		else:
+			forward = 0
+	
+	handel_collision()
+	
+	if Input.is_action_pressed("roll_left"):
+		roll = -1
+	elif Input.is_action_pressed("roll_right"):
+		roll = 1
+	else:
+		roll = 0
+	
+	if roll || forward:
+		circleAngle += circleSpeed * delta * forward
+		
+		circleAngle = fmod(circleAngle , 2*PI)
+		
+		var newPositionX = circleRadius * cos(circleAngle)
+		var newPositionZ = circleRadius * sin(circleAngle)
 
-	var newPosition = Vector3(newPositionX, position.y, newPositionZ)
-	var newDirection = newPosition - position
+		var newPosition = Vector3(newPositionX, position.y, newPositionZ)
+		var newDirection = newPosition - position
 
-	newDirection.normalized()
+		newDirection.normalized()
 
-	var rotationAngle = -1*lastDirection.angle_to(newDirection)
-	transform = transform.rotated(Vector3.UP, rotationAngle)
-	transform = transform.rotated_local(Vector3.FORWARD, selfRotationSpeed * delta)
+		var rotationAngle = -1*lastDirection.angle_to(newDirection)
+		transform = transform.rotated(Vector3.UP, rotationAngle)
+		#Rotation
+		transform = transform.rotated_local(Vector3.FORWARD, selfRotationSpeed * delta * roll)
 
-	position = newPosition
-	lastDirection = newDirection
+		position = newPosition
+		lastDirection = newDirection
+	if forward:
+		move_and_slide()
+
+func handel_collision():
+	for index in range (get_slide_collision_count()):
+		print("collision")
+		var collision = get_slide_collision(index)
+		if collision.get_collider() == null:
+			continue
+		if collision.get_collider().is_in_group("frame"):
+			forward = 0
+		elif collision.get_collider().is_in_group("center"):
+			continue
+		else:
+			continue
+		break # prevent further duplicate calls?
