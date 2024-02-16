@@ -31,7 +31,7 @@ func _physics_process(delta):
 		else:
 			forward = 0
 	
-	handel_collision()
+	#handel_collision()
 	
 	if Input.is_action_pressed("roll_left"):
 		roll = -1
@@ -40,28 +40,28 @@ func _physics_process(delta):
 	else:
 		roll = 0
 	
-	if roll || forward:
-		circleAngle += circleSpeed * delta * forward
-		
-		circleAngle = fmod(circleAngle , 2*PI)
-		
-		var newPositionX = circleRadius * cos(circleAngle)
-		var newPositionZ = circleRadius * sin(circleAngle)
-
-		var newPosition = Vector3(newPositionX, position.y, newPositionZ)
-		var newDirection = newPosition - position
-
-		newDirection.normalized()
-
+	circleAngle += circleSpeed * delta * forward
+	
+	circleAngle = fmod(circleAngle , 2*PI)
+	
+	var newPositionX = circleRadius * cos(circleAngle)
+	var newPositionZ = circleRadius * sin(circleAngle)
+	
+	var newPosition = Vector3(newPositionX, position.y, newPositionZ)
+	var newDirection = newPosition - position
+	
+	newDirection.normalized()
+	
+	if !test_move(transform,newDirection):
 		var rotationAngle = -1*lastDirection.angle_to(newDirection)
 		transform = transform.rotated(Vector3.UP, rotationAngle)
-		#Rotation
-		transform = transform.rotated_local(Vector3.FORWARD, selfRotationSpeed * delta * roll)
-
 		position = newPosition
 		lastDirection = newDirection
-	if forward:
-		move_and_slide()
+	
+	#Rotation
+	transform = transform.rotated_local(Vector3.FORWARD, selfRotationSpeed * delta * roll)
+	
+	move_and_slide()
 
 func handel_collision():
 	for index in range (get_slide_collision_count()):
@@ -70,7 +70,7 @@ func handel_collision():
 		if collision.get_collider() == null:
 			continue
 		if collision.get_collider().is_in_group("frame"):
-			forward = 0
+			continue
 		elif collision.get_collider().is_in_group("center"):
 			continue
 		else:

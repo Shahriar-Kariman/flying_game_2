@@ -16,6 +16,7 @@ func generate_obsticle():
 	var randAngle = randf_range(-PI/2,PI/2)
 	instance.rotate_object_local(Vector3.RIGHT,randAngle)
 	add_child(instance)
+	#instance.passed.connect(generate_obsticle)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

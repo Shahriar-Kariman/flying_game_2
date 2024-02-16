@@ -1,6 +1,5 @@
-extends Node3D
+extends Control
 
-signal passed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -10,6 +9,5 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_center_area_exited(area):
-	$center.queue_free()
-	passed.emit()
+func increaseScore():
+	pass

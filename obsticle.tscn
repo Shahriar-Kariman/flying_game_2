@@ -63,3 +63,5 @@ collision_layer = 4
 [node name="CollisionShape3D" type="CollisionShape3D" parent="center"]
 transform = Transform3D(2, 0, 0, 0, -2.18557e-09, -1, 0, 0.05, -4.37114e-08, 0, 0, 0)
 shape = SubResource("BoxShape3D_b1fy5")
+
+[connection signal="area_exited" from="center" to="." method="_on_center_area_exited"]
